@@ -1,31 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const { checkRequsterBody } = require('../helper');
+const controller = require('../controller');
 
 // all auth routes
 router.get('/', (req, res, next)=>{
     res.status(200).json({
-        message : 'handling get auth'
+        message : 'auth route is working'
     })
 })
 
-router.post('/register', async (req, res) => {
-    const userCredential = {
-        email : req.body.email,
-        password: req.body.password
-    }
-    const { status, message } = await checkRequsterBody(userCredential)
-    if(status){
-        res.status(200).json({
-            status: 200,
-            message : userCredential
-        })
-    }else{
-        res.status(401).json({
-            status: 401,
-            message : message
-        })
-    }
-})
+router.post('/register',controller.register)
+router.post('/login',controller.login)
 
 module.exports = router;

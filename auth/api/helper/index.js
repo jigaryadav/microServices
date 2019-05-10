@@ -1,12 +1,20 @@
+const User = require('../models/user');
+
 const checkEmail = (str) => {
-    var regularExpression = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+    var regularExpression = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
     return regularExpression.test(str);
 }
 
-const checkEmailDuplication = (email) => new Promise((resolve, reject)=>{
-    setTimeout(()=>{
+const checkEmailDuplication = (email) => new Promise((resolve)=>{
+    User.findOne({email}).exec().then((res)=>{
+        if(res){
+            resolve(true)
+        }else{
+            resolve(false)
+        }
+    }).catch((err)=>{
         resolve(true)
-    },  2000)
+    })
 })
 
 const checkRequsterBody = async ({email, password}) => {
@@ -20,11 +28,6 @@ const checkRequsterBody = async ({email, password}) => {
             status: false,
             message: 'invalid email id'
         }
-    }else if(await checkEmailDuplication(email)){
-        return {
-            status: false,
-            message: 'email id already registered'
-        }
     }else if (!password){
         return {
             status: false,
@@ -34,6 +37,11 @@ const checkRequsterBody = async ({email, password}) => {
         return {
             status: false,
             message: 'password must be grater then 6 character'
+        }
+    }else if(await checkEmailDuplication(email)){
+        return {
+            status: false,
+            message: 'email id already registered'
         }
     }
     else{
