@@ -4,9 +4,9 @@ const checkEmail = (str) => {
 }
 
 const checkEmailDuplication = (email) => new Promise((resolve, reject)=>{
-    // setTimeout(()=>{
+    setTimeout(()=>{
         resolve(true)
-    // },  1000)
+    },  2000)
 })
 
 const checkRequsterBody = async ({email, password}) => {
@@ -20,7 +20,7 @@ const checkRequsterBody = async ({email, password}) => {
             status: false,
             message: 'invalid email id'
         }
-    }else if (await checkEmailDuplication(email)){
+    }else if(await checkEmailDuplication(email)){
         return {
             status: false,
             message: 'email id already registered'

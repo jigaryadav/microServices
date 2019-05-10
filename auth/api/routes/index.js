@@ -9,12 +9,12 @@ router.get('/', (req, res, next)=>{
     })
 })
 
-router.post('/register', (req, res, next)=>{
+router.post('/register', async (req, res) => {
     const userCredential = {
         email : req.body.email,
         password: req.body.password
     }
-    const { status, message } = checkRequsterBody(userCredential)
+    const { status, message } = await checkRequsterBody(userCredential)
     if(status){
         res.status(200).json({
             status: 200,
