@@ -1,0 +1,25 @@
+{
+  "name": "auth-api",
+  "version": "1.0.0",
+  "description": "auth microservice for authenticate user ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "keywords": [
+    "node",
+    "restfull",
+    "api"
+  ],
+  "author": "jigar yadav",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.16.4",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.0"
+  }
+}
