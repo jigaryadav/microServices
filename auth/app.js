@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 // connect to database
-mongoose.connect('mongodb+srv://admin:admin@cluster0-9h6sm.mongodb.net/test?retryWrites=true',{ 
+mongoose.connect('mongodb+srv://admin:admin@cluster0-9h6sm.gcp.mongodb.net/test',{ 
     useNewUrlParser: true,
     useCreateIndex: true
 }).then((res, error)=>{
