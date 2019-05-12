@@ -19,15 +19,20 @@ const update = async (req, res) => {
             updateDataObject.profession = requestData.profession
         }if(requestData.website){
             updateDataObject.website = requestData.website
+        }if(requestData.profilePic){
+            updateDataObject.profilePic = requestData.profilePic
+        }if(requestData.headerPic){
+            updateDataObject.headerPic = requestData.headerPic
+        }if(requestData.username){
+            updateDataObject.username = requestData.username
         }
         try {
-            User.updateOne({_id:userData._id},{$set: updateDataObject})
+            User.updateOne({_id:userData._id},{$set: updateDataObject}).exec()
             res.status(200).json({
                 status: 200,
                 message: 'profile updated successfully!',
                 data: updateDataObject
             })
-            res.end();
         } catch (error) {
             notFound(res)
         }

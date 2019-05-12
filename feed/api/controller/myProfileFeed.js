@@ -13,7 +13,9 @@ const myProfileFeed = (req, res) => {
                 path: 'user',
                 select:{'_id': 1, 'email':1}
               }
-        }).sort([['_id', -1]])
+        })
+        .sort([['_id', -1]])
+        .exec()
         .then((data)=>{
         res.status(200).json({
             status:200,

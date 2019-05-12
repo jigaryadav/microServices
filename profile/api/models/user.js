@@ -9,7 +9,7 @@ const dateSchema = mongoose.Schema({
 
 const userSchema = mongoose.Schema({
     email: {type: String, require: true, unique: true},
-    displayName: {type: Boolean},
+    displayName: {type: String},
     password: {type: String, require: true},
     emailVerify: { type: Boolean, default: false},
     bio: {type: String},
@@ -19,7 +19,10 @@ const userSchema = mongoose.Schema({
     dob: {type: dateSchema},
     profession: {type: String},
     website: {type: String},
-    age: {type: Number}
+    age: {type: Number},
+    profilePic: {type: String},
+    headerPic: {type: String},
+    username: {type: String}
 })
 
 module.exports = mongoose.model('User', userSchema);

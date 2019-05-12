@@ -2,7 +2,7 @@ const User = require('../models/user');
 
 const profile = async (req, res) => {
     let userData  = req.validUserData;
-    User.findOne({_id:userData._id}, {password:0, __v:0}).then((user)=>{
+    User.findOne({_id:userData._id}, {password:0, __v:0}).exec().then((user)=>{
         if(user){
             res.status(200).json({
                 status: 200, 

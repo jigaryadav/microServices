@@ -4,28 +4,24 @@ const UserImage = require('../models/userImage');
 const profileImage = (req, res) =>{
     if(req.params){
         let username = req.params.username;
-        User.findOne({username: username}).then((user)=>{
+        User.findOne({username: username}).exec().then((user)=>{
             if(user){
-                UserImage.findOne({userId : user._id}).then((userImageData)=>{
-                    if(userImageData){
-                        if(req.query.header){
-                            res.writeHead(301, { 
-                                "Location": userImageData.profilePic
-                            });
-                            res.end();
-                        }else{
-                            res.writeHead(301, { 
-                                "Location": userImageData.headerPic
-                            });
-                            res.end();
-                        }
-                    }else{
-                        defaultImage(res)
-                    }
-                })
+                if(req.query.header){
+                    res.writeHead(301, { 
+                        "Location": user.headerPic
+                    });
+                    res.end();
+                }else{
+                    res.writeHead(301, { 
+                        "Location": user.profilePic
+                    });
+                    res.end();
+                }
             }else{
                 defaultImage(res)
             }
+        }).catch((e)=>{
+            defaultImage(res)
         })
     }
 }
