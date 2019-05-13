@@ -17,7 +17,7 @@ const checkUsername = (req, res) =>{
                     User.updateOne({_id:currentUserData._id}, {$set:{username}}).exec()
                     res.status(200).json({
                         status: 200,
-                        message:'username set successfully',
+                        message:'Username set successfully',
                         data:{
                             username
                         }
@@ -28,7 +28,7 @@ const checkUsername = (req, res) =>{
             }else{
                 res.status(200).json({
                     status:200,
-                    message: 'username available',
+                    message: 'Username available',
                     data:{
                         available: true
                     }
@@ -37,13 +37,13 @@ const checkUsername = (req, res) =>{
         }else{
             res.status(202).json({
                 status:202,
-                message: 'username already exiest! try again'
+                message: 'Username already exiest! try again'
             })
         }
     }).catch(()=>{
         res.status(200).json({
             status:200,
-            message: 'invalud username'
+            message: 'Invalud username'
         })
     })
 }
