@@ -12,9 +12,8 @@ const login = async (req, res) => {
     }
     if(!checkEmail(userCredential.email)){
         authFail(res);
-        console.log('called')
     }else{
-        User.findOne({email:userCredential.email}).exec().then((user) => {
+        User.findOne({email:userCredential.email}).then((user) => {
             if(user){
                 let hashPassword = user.password;
                 bcrypt.compare(userCredential.password, hashPassword, function(err, validPassword) {
@@ -27,13 +26,17 @@ const login = async (req, res) => {
                             if(error){
                                 authFail(res)
                             }else{
+                                let data = {
+                                    email: user.email,
+                                    _id: user._id,
+                                }
+                                if(!user._doc.username){
+                                    data.usernameRequire = true
+                                }
                                 res.status(200).json({
                                     status:200,
                                     token,
-                                    data:{
-                                        email: user.email,
-                                        _id: user._id
-                                    }
+                                    data
                                 })
                             }
                         })
