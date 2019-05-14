@@ -9,6 +9,7 @@ const checkUsername = (req, res) =>{
             status:202,
             message: 'invalud username'
         })
+        return;
     }
     User.findOne({username}).then((userData)=>{
         if(!userData){

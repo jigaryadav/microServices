@@ -3,7 +3,7 @@ const User = require('../models/user');
 
 const myProfileFeed = (req, res) => {
     MyProfileFeed.find({},{'__v':0})
-        .populate({ path: 'user', select:{'_id': 1, 'email':1} })
+        .populate({ path: 'user', select:{'_id': 1, 'email':1, 'username':1, 'displayName': 1} })
         .populate({path: 'like.user', select:{'_id': 1, 'email':1}})
         .populate({path: 'originalTweet'})
         .populate({
@@ -11,7 +11,7 @@ const myProfileFeed = (req, res) => {
             select:{'__v': 0, 'like':0, rePost:0},
             populate: {
                 path: 'user',
-                select:{'_id': 1, 'email':1}
+                select:{'_id': 1, 'email':1, 'username':1, 'displayName': 1}
               }
         })
         .sort([['_id', -1]])
