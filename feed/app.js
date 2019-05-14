@@ -24,14 +24,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json())
 
 // all default routes 
-app.use('/feed', feedRoute);
-app.get('/', (res, req, next)=>{
-    req.status(200).json({
-        message: 'feed server is up and running!'
-    })
-})
-
-
+app.use('/v1', feedRoute);
 
 //error handling for auth 
 app.use((req, res, next)=>{

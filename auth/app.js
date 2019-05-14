@@ -18,20 +18,13 @@ mongoose.connect('mongodb+srv://admin:admin@cluster0-9h6sm.gcp.mongodb.net/test'
 // route file path 
 const authRoute = require('./api/routes/index');
 
-//logger and middlleware
+// logger and middlleware
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json())
 
-// all default routes 
-app.use('/auth', authRoute);
-app.get('/', (res, req, next)=>{
-    req.status(200).json({
-        message: 'auth server is up and running!'
-    })
-})
-
-
+// v1 all default routes 
+app.use('/v1', authRoute);
 
 //error handling for auth 
 app.use((req, res, next)=>{
@@ -39,6 +32,7 @@ app.use((req, res, next)=>{
     error.status = 404;
     next(error);
 })
+
 app.use((error, req, res, next)=>{
     const status = error.status || 500;
     res.status(status);
