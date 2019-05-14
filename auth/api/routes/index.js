@@ -21,7 +21,8 @@ router.post('/register', controller.register)
 
 router.post('/login', controller.login)
 
-router.post('/', controller.verify)
+// verify endpoint for other micro services
+router.post('/verify', controller.verify)
 
 
 module.exports = router;

@@ -24,12 +24,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json())
 
 // all default routes 
-app.use('/profile', profileRoute);
-app.get('/', (res, req, next)=>{
-    req.status(200).json({
-        message: 'profile server is up and running!'
-    })
-})
+app.use('/v1', profileRoute);
 
 
 
