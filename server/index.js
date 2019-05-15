@@ -4,12 +4,19 @@ const fastify = require('fastify')({})
 // required plugin for HTTP requests proxy
 fastify.register(require('fastify-reply-from'))
 
+// root route 
+fastify.get('/', async (request, reply) => {
+  reply.send('Server is up and running..') 
+})
+ 
+
 // gateway plugin
 fastify.register(require('k-fastify-gateway'), {
   middlewares: [
     morgan('dev')
   ],
-    routes: [{
+    routes: [
+    {
       prefix: '/v1/auth',
       prefixRewrite: ':3000/v1',
       target: 'http://localhost',
@@ -23,8 +30,10 @@ fastify.register(require('k-fastify-gateway'), {
         target: 'http://localhost',
     }]
   })
-   
+
+
   // start the gateway HTTP server
   fastify.listen(8080, '0.0.0.0').then((address) => {
     console.log(`API Gateway listening on ${address}`)
   })
+
