@@ -16,7 +16,7 @@ const like = (req, res) => {
             })
         }else{
             res.status(200).json({
-                status: 202,
+                status: 200,
                 message: "liked successfully!",
                 data: {
                     like: like
