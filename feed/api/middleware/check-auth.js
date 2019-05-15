@@ -1,7 +1,7 @@
 var Request = require("request");
 
 module.exports = (req, res, next) =>{
-    Request.get({
+      Request.get({
         url: 'http://localhost:8080/v1/auth/verify',
         headers: req.headers
       }, (error, response, body) => {

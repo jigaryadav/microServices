@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controller');
+const checkUser = require('../middleware/check-auth');
 
 // default feed routes
 router.get('/', (req, res, next)=>{
@@ -11,7 +12,5 @@ router.get('/', (req, res, next)=>{
 
 router.get('/me', controller.myProfileFeed)
 router.post('/post', controller.post)
-
-
-
+router.post('/like', checkUser, controller.like)
 module.exports = router;
