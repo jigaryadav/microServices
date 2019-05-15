@@ -51,7 +51,40 @@ const checkRequsterBody = async ({email, password}) => {
     }
 }
 
+const checkUserAccountStatus = (data)=> {
+    if(!data){
+        return error('user not found', {
+            user: false
+        })
+    }else if(!data.active){
+        return error('account deactivated', {
+            active: false
+        })
+    }else if(!data.emailVerify){
+        return error('please verify your email', {
+            emailVerify: false
+        })
+    }else if(!data.username){
+        return error('please set your username first', {
+            username: false
+        })
+    }else{
+        return {
+            status: 200
+        }
+    }
+}
+
+const error = (message, data)=>{
+    return{
+        status: 202,
+        message,
+        data
+    }
+}
+
 module.exports = {
     checkRequsterBody,
-    checkEmail
+    checkEmail,
+    checkUserAccountStatus
 }
