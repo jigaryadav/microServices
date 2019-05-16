@@ -27,13 +27,17 @@ const follow = (req, res) => {
         .exec()
         .then((userData)=>{
             if(userData){
-                res.status(202).json({
-                    status: 202,
-                    message: 'you are already following',
+                UserFollowing.deleteOne({ $and:[ { follower: currentUser._id }, { following: followingID } ] }).exec()
+                res.status(200).json({
+                    status: 200,
+                    message: 'unfollow successfully',
                     data:{
-                        follow: false
+                        follow: false,
+                        following: followingID
                     }
                 })
+                res.end();
+                return;
             }else{
                 followRequest = new UserFollowing({
                     follower: currentUser._id,
@@ -44,7 +48,7 @@ const follow = (req, res) => {
                         status: 200,
                         message: 'follow success',
                         data:{
-                            ...result,
+                            ...result._doc,
                             follow: true
                         }
                     })

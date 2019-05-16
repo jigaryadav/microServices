@@ -2,7 +2,9 @@ const MyProfileFeed = require('../models/feed');
 const User = require('../models/user');
 
 const myProfileFeed = (req, res) => {
-    MyProfileFeed.find({},{'__v':0})
+    let currentUser = req.validUserData
+    console.log(currentUser._id)
+    MyProfileFeed.find({ 'user' : { $eq: currentUser._id } })
         .populate({ path: 'user', select:{'_id': 1, 'email':1, 'username':1, 'displayName': 1} })
         .populate({path: 'like.user', select:{'_id': 1, 'email':1}})
         .populate({path: 'originalTweet'})

@@ -10,7 +10,7 @@ router.get('/', (req, res, next)=>{
     })
 })
 
-router.get('/me', controller.myProfileFeed)
+router.get('/me', checkUser, controller.myProfileFeed)
 router.post('/post', controller.post)
 router.post('/like', checkUser, controller.like)
 module.exports = router;

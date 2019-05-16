@@ -11,6 +11,7 @@ const checkUsername = (req, res) =>{
         })
         return;
     }
+    username = username.toLowerCase();
     User.findOne({username}).then((userData)=>{
         if(!userData){
             if(save){

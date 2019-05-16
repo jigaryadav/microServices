@@ -8,7 +8,7 @@
     "init-auth": "cd auth/ && npm start",
     "init-feed": "cd feed/ && npm start",
     "init-profile": "cd profile/ && npm start",
-    "start": "npm run init-auth | npm run init-feed |  npm run init-server"
+    "start": "npm run init-auth | npm run init-profile |  npm run init-server"
   },
   "repository": {
     "type": "git",
