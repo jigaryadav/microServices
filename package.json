@@ -1,0 +1,18 @@
+{
+  "name": "server_folder",
+  "version": "1.0.0",
+  "description": "Node microservices",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jigaryadav/microServices.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jigaryadav/microServices/issues"
+  },
+  "homepage": "https://github.com/jigaryadav/microServices#readme"
+}
