@@ -4,7 +4,7 @@
   "description": "Node microservices",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "init-server": "cd server/ && npm start",
+    "init-server": "cd server/ && npm i && npm start",
     "init-auth": "cd auth/ && npm i && npm start",
     "init-feed": "cd feed/ && npm i && npm start",
     "init-profile": "cd profile/ && npm i && npm start",
