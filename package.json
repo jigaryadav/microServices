@@ -4,7 +4,11 @@
   "description": "Node microservices",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cd auth && npm start"
+    "init-server": "cd server/ && npm start",
+    "init-auth": "cd auth/ && npm start",
+    "init-feed": "cd feed/ && npm start",
+    "init-profile": "cd profile/ && npm start",
+    "start": "npm run init-auth | npm run init-feed | npm run init-profile| npm run init-server"
   },
   "repository": {
     "type": "git",
