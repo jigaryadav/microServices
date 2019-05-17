@@ -11,6 +11,9 @@ router.get('/', (req, res, next)=>{
 })
 
 router.get('/me', checkUser, controller.myProfileFeed)
-router.post('/post', controller.post)
+router.post('/post', checkUser, controller.post)
+router.get('/post/:postId', controller.singlePost)
 router.post('/like', checkUser, controller.like)
+router.post('/repost', checkUser, controller.rePost)
+
 module.exports = router;

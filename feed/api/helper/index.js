@@ -53,5 +53,5 @@ const checkRequsterBody = async ({email, password}) => {
 
 module.exports = {
     checkRequsterBody,
-    checkEmail
+    checkEmail,
 }

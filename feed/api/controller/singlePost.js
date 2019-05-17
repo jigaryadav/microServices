@@ -1,10 +1,16 @@
-const MyProfileFeed = require('../models/feed');
-const User = require('../models/user');
+const Feed = require('../models/feed');
 
-const myProfileFeed = (req, res) => {
+const singlePost = (req, res) => {
     let currentUser = req.validUserData
-
-    MyProfileFeed.find({ 'user' : { $eq: currentUser._id } })
+    let postId = req.params.postId;
+    if(!postId){
+        res.status(202).json({
+            status: 202,
+            message:'postId is missing'
+        })
+        return
+    }
+    Feed.findOne({ _id: postId })
         .populate({ path: 'user', select:{'_id': 1, 'email':1, 'username':1, 'displayName': 1} })
         .populate({path: 'like.user', select:{'_id': 1, 'email':1}})
         .populate({path: 'originalTweet'})
@@ -32,8 +38,12 @@ const myProfileFeed = (req, res) => {
             message: 'Feed fetched successfully!',
             data
         })
+    }).catch(()=>{
+        res.status(202).json({
+            status: 202,
+            message:'postId is missing'
+        })
     })
 }
 
-module.exports = myProfileFeed
-
+module.exports = singlePost
