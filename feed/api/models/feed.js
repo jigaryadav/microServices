@@ -5,7 +5,7 @@ const feedSchema = mongoose.Schema({
     text: { type: String},
     like: { type:Array, ref: 'User', default: [] },
     rePost: { type:Array, ref: 'User', default: [] },
-    originalTweet: { type: String , ref: 'FeedSchema' },
+    originalTweet: { type: String , ref: 'Feed' },
     rePosted: { type: Boolean, default: false },
     edited: {type: Boolean, default: false},
     editedText: { type: String },

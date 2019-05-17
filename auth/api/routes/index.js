@@ -12,16 +12,11 @@ router.get('/', (req, res, next)=>{
 router.get('/checkStatus', controller.verifyMiddleware, controller.checkStatus)
 
 router.post('/checkUsername', controller.verifyMiddleware, controller.checkUsername)
-// {
-// 	"username": "juned1",
-// 	"save": true
-// }
 
 router.post('/register', controller.register)
 
 router.post('/login', controller.login)
 
-// verify endpoint for other micro services
 router.get('/verify', controller.verify)
 
 

@@ -18,14 +18,7 @@ const rePost = (req, res) => {
           let {status, data} = JSON.parse(body)
           if(status == 200 && data){
               if(data.text || !data.originalTweet){
-                  let rePost =  data.rePost;
-                  let rePostIndex = rePost.indexOf(currentUser._id)
-                  if(rePostIndex == -1){
-                      rePost.push(currentUser._id)
-                  }else{
-                      rePost.splice(rePostIndex, 1)
-                  }
-                  Feed.findOneAndUpdate({_id:postId}, { $set :{ rePost }}, {useFindAndModify: false}).exec((err, updatedData)=>{
+                findAndUpdate(data, currentUser, postId).then(({error, updatedData, rePostIndex})=>{
                     if(rePostIndex == -1){
                         let feedData = {
                             user: currentUser._id,
@@ -38,7 +31,6 @@ const rePost = (req, res) => {
                             status: 200,
                             message: 'RT success'
                         })
-
                     }else{
                         Feed.findOneAndDelete({ $and:[ { user: currentUser._id }, { originalTweet: postId} ] }).exec()
                         res.status(200).json({
@@ -46,18 +38,10 @@ const rePost = (req, res) => {
                             message: 'RT undo'
                         })
                     }
-                  })
+                })
               }else if(!data.text && data.originalTweet){
-                let rePost =  data.originalTweet.rePost;
-                let rePostIndex = rePost.indexOf(currentUser._id)
-                if(rePostIndex == -1){
-                    rePost.push(currentUser._id)
-                }else{
-                    rePost.splice(rePostIndex, 1)
-                }
-                Feed.findOneAndUpdate({_id:data.originalTweet._id}, { $set :{ rePost }},{useFindAndModify: false}).exec((err, updated)=>{
-                    console.log(updated)
-                    if(updated){
+                findAndUpdate(data.originalTweet, currentUser, data.originalTweet._id).then(({error, updatedData, rePostIndex})=>{
+                    if(updatedData){
                         Feed.findByIdAndDelete(postId).exec()
                         res.status(200).json({
                             status: 200,
@@ -78,10 +62,22 @@ const rePost = (req, res) => {
             })
           }
     });
+}
 
-    // res.status(200).json({
-    //     message: 'ok'
-    // })
+const findAndUpdate = (data, currentUser, postId) =>{
+    return new Promise((resolve, reject)=>{
+        let rePost =  data.rePost;
+        let rePostIndex = rePost.indexOf(currentUser._id)
+        if(rePostIndex == -1){
+            rePost.push(currentUser._id)
+        }else{
+            rePost.splice(rePostIndex, 1)
+        }
+        
+        Feed.findOneAndUpdate({_id: postId}, { $set :{ rePost }}, {useFindAndModify: false}).exec((err, updatedData)=>{
+            resolve({err, updatedData, rePostIndex})
+        })
+    })
 }
 
 module.exports = rePost

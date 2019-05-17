@@ -9,7 +9,7 @@ router.get('/me', checkUser, controller.profile);
 router.get('/:username/profile_image', controller.profileImage)
 router.get('/user', checkUserIfAny, controller.user);
 router.post('/update', checkUser, controller.update)
-router.post('/follow', checkUser, controller.follow)
+router.post('/follow', checkUser, controller.follow) // put validation on following id
 
 
 router.get('/', (res, req, next)=>{
