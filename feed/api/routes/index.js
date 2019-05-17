@@ -10,9 +10,10 @@ router.get('/', (req, res, next)=>{
     })
 })
 
+router.get('/timeline', checkUser, controller.timeLine)
 router.get('/me', checkUser, controller.myProfileFeed)
-router.post('/post', checkUser, controller.post)
 router.get('/post/:postId', controller.singlePost)
+router.post('/post', checkUser, controller.post)
 router.post('/like', checkUser, controller.like)
 router.post('/repost', checkUser, controller.rePost)
 
