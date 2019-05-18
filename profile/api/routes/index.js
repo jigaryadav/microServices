@@ -8,6 +8,7 @@ const checkUserIfAny = require('../middleware/check-auth-ifany');
 router.get('/me', checkUser, controller.profile);
 router.get('/:username/profile_image', controller.profileImage)
 router.get('/user', checkUserIfAny, controller.user);
+router.get('/getFollowDetail',checkUser, controller.getFollowDetail)
 router.post('/update', checkUser, controller.update)
 router.post('/follow', checkUser, controller.follow) // put validation on following id
 

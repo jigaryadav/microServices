@@ -5,6 +5,7 @@ const myFeed = (req, res) => {
     let currentUser = req.validUserData
 
     Feed.find({ 'user' : { $eq: currentUser._id } })
+        .limit(20)
         .populate({ path: 'user', select:{'_id': 1, 'email':1, 'username':1, 'displayName': 1} })
         .populate({path: 'like.user', select:{'_id': 1, 'email':1}})
         .populate({path: 'originalTweet'})

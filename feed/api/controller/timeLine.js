@@ -1,29 +1,40 @@
 const Feed = require('../models/feed');
 const User = require('../models/user');
+var Request = require("request");
 
 
-const timeLine = (req, res) => {
+const timeLine = async (req, res) => {
+    let currentUser = req.validUserData;
     let lastPostId = req.query.lastPostId;
     let latestPostId = req.query.latestPostId
-    let limit = req.query.limit ? Number(req.query.limit) : 2
+    let limit = req.query.limit ? Number(req.query.limit) : 10
+    let userIds = [currentUser._id]
     if(isNaN(limit)){
         limit = 20;
     }
 
-    console.log(limit)
-    data = ['5cd5aaf8e5cacd05df34b677', '5cd5b7d2278270088decffd0', '5cd88b363c6b691ec4643cb9']
-
+    let { error,response, body  } = await fetchFollowingData(req)
+    if(body){
+        let { status, data } = JSON.parse(body)
+        if(status == 200){
+            userIds = [...userIds, ...data]
+        }else{
+            res.status(202).json({
+                status: 202,
+                message:'invalid id',
+            })
+            return 
+        }
+    }
 
     // query string 
-    let query = {'user' : { $in: data } } 
+    let query = {'user' : { $in: userIds } } 
     if(lastPostId){
         query = {$and : [{ '_id' : {$lt: lastPostId} }, query ] }
     }
     if(latestPostId){
         query = {$and : [{ '_id' : {$gt: latestPostId} }, query ] }
     }
-
-
 
     Feed.find(query,{'__v':0})
         .sort([['_id', -1]])
@@ -50,18 +61,26 @@ const timeLine = (req, res) => {
         .exec()
         .then((timelineData)=>{
         res.status(200).json({
-            status: 'ok',
+            status: 200,
             message:'data fetched succesfully',
             data:timelineData
         })
     }).catch((e)=>{
         res.status(202).json({
+            status: 202,
             message:'invalid id',
             e
         })
     })
-
-    
 }
+
+const fetchFollowingData = (req) =>new Promise((resolve, reject)=>{
+    Request.get({
+        url: 'http://localhost:8080/v1/profile/getFollowDetail?following=true',
+        headers: req.headers
+      }, (error, response, body)=>{
+            resolve({error, response, body});
+      })
+})
 
 module.exports = timeLine;
