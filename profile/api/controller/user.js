@@ -14,7 +14,7 @@ const user = (req, res) => {
     }
 
     if(currentUser){
-        User.find(query,{password: 0, __v:0})
+        User.find(query,{password: 0, __v:0, active: 0, emailVerify:0, dob:0})
             .lean()
             .limit(20)
             .exec((error, u)=>{
@@ -57,7 +57,6 @@ const user = (req, res) => {
                                 user = {
                                     ...user,
                                     following: true,
-                                    queryName
                                 }
                             }
                             return user
