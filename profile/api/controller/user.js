@@ -3,9 +3,18 @@ const UserFollowing = require('../models/userFollowings');
 
 const user = (req, res) => {
     let currentUser = req.validUserData;
+    let queryName = req.query.s;
+    let username = req.query.user
+    let query = {};
+    if(queryName){
+        query = {"$or" : [{ "username" : {$regex : `.*${queryName}.*`} } , { "displayName" : {$regex : `.*${queryName}.*`} }]}
+    }
+    if(username){
+        query = { "username": username }
+    }
 
     if(currentUser){
-        User.find({},{password: 0, __v:0})
+        User.find(query,{password: 0, __v:0})
             .lean()
             .limit(20)
             .exec((error, u)=>{
@@ -47,7 +56,8 @@ const user = (req, res) => {
                             if(filterFollowerUser.length > 0){
                                 user = {
                                     ...user,
-                                    following: true
+                                    following: true,
+                                    queryName
                                 }
                             }
                             return user

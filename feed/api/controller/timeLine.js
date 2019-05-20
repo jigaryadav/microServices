@@ -36,10 +36,12 @@ const timeLine = async (req, res) => {
         query = {$and : [{ '_id' : {$gt: latestPostId} }, query ] }
     }
 
+    let userDetailObject = {'email':0, 'password': 0, 'emailVerify':0, 'active':0, 'dob':0, '__v':0}
+
     Feed.find(query,{'__v':0})
         .sort([['_id', -1]])
         .limit(latestPostId? 0 : limit)
-        .populate({ path: 'user', select:{'_id': 1, 'email':1, 'username':1, 'displayName': 1} })
+        .populate({ path: 'user', select: userDetailObject })
         .populate({path: 'like.user', select:{'_id': 1, 'email':1}})
         .populate({path: 'originalTweet'})
         .populate({
@@ -47,14 +49,14 @@ const timeLine = async (req, res) => {
             select:{'__v': 0},
             populate: [{
                 path: 'user',
-                select:{'_id': 1, 'email':1, 'username':1, 'displayName': 1}
+                select: userDetailObject
             },
             {
                 path: 'originalTweet',
                 select:{'__v': 0},
                 populate: {
                     path: 'user',
-                    select:{'_id': 1, 'email':1, 'username':1, 'displayName': 1}
+                    select: userDetailObject
                 }
             }]
         })

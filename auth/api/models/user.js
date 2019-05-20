@@ -20,7 +20,7 @@ const userSchema = mongoose.Schema({
     profession: {type: String},
     website: {type: String},
     age: {type: Number},
-    profilePic: {type: String},
+    profilePic: {type: String, default: 'https://res.cloudinary.com/dayfq27in/image/upload/v1558334336/21964_bdbxze.png' },
     headerPic: {type: String},
     username: {type: String}
 })
